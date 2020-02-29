@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
 
 const API_URL = 'http://localhost:3000';
 
@@ -13,6 +14,14 @@ export class AuthService {
 
   authenticate(userName: string, password: string) {
     //post returns an Observable
-    return this.httpClient.post(API_URL + '/user/login', {userName, password}); //same as {userName: userName, password: password}
+    return this.httpClient.post(
+      API_URL + '/user/login', 
+      {userName, password}, //same as {userName: userName, password: password}
+      {observe: 'response'} //special configuration to allow access to the response object
+      ) 
+      .pipe(tap(res => { //thanks to the special configuration above, res is now an HttpResponse object
+        const authToken = res.headers.get('x-access-token'); //response header set with the authentication token
+        console.log(`User ${userName} authenticated with token [${authToken}]`);
+      }));
   }
 }
