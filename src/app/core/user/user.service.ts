@@ -31,4 +31,9 @@ export class UserService {
     this.userSubject.next(user); //userSubject (type Subject) emits a User information
   }
 
+  logout() {
+    this.tokenService.removeToken();
+    this.userSubject.next(null);
+  }
+
 }
