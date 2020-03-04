@@ -11,11 +11,9 @@ import { Observable } from 'rxjs';
 export class HeaderComponent implements OnInit {
 
   user$: Observable<User>; //$ at the end of the variable to indicate it is an Observable
-  user: User;
 
   constructor(userService: UserService) { 
     this.user$ = userService.getUser(); //it returns an Observable
-    this.user$.subscribe(usuario => this.user = usuario);
   }
 
   ngOnInit() {
