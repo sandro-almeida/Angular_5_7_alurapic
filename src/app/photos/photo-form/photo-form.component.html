@@ -1,7 +1,12 @@
 <div class="container">
-  <form class="row" [formGroup]="photoForm">
+  <form class="row" [formGroup]="photoForm" (submit)="upload()">
     <div class="col-md-6 text-center">
-      <input formControlName="file" type="file" accept="image/*"> <!-- Only accepts image files -->
+      <input 
+        formControlName="file" 
+        type="file" 
+        accept="image/*"
+        (change)="file = $event.target.files[0]"
+        > <!-- Only accepts image files -->
       <ap-vmessage 
         text="Please, select a photo" 
         *ngIf="photoForm.get('file').errors?.required">

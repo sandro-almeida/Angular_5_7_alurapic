@@ -1,3 +1,4 @@
+import { Photo } from './../photo/photo';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class PhotoFormComponent implements OnInit {
 
   photoForm: FormGroup;
+  file: File;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -19,6 +21,14 @@ export class PhotoFormComponent implements OnInit {
       description: ['', Validators.maxLength(300)],
       allowComments: [true]
     })
+  }
+
+  upload() {
+    const description = this.photoForm.get('description').value;
+    const allowComments = this.photoForm.get('allowComments').value;
+    console.log("Descricao: ", description);
+    console.log("Comentarios: ", allowComments);
+    console.log("File: ", this.file);
   }
 
 }
