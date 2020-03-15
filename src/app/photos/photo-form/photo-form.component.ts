@@ -1,6 +1,8 @@
+import { PhotoService } from './../photo/photo.service';
 import { Photo } from './../photo/photo';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ap-photo-form',
@@ -12,7 +14,11 @@ export class PhotoFormComponent implements OnInit {
   photoForm: FormGroup;
   file: File;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private photoService: PhotoService,
+    private router: Router
+    ) { }
 
   ngOnInit() {
     //Each property listed in formBuilder.group() should match a form field
@@ -29,6 +35,11 @@ export class PhotoFormComponent implements OnInit {
     console.log("Descricao: ", description);
     console.log("Comentarios: ", allowComments);
     console.log("File: ", this.file);
+
+    this.photoService.upload(description, allowComments, this.file)
+      .subscribe(
+        () => this.router.navigate([''])
+      );
   }
 
 }
