@@ -45,4 +45,10 @@ export class PhotoService {
         );
     }
 
+    addComment(photoId: number, commentText: string) {
+        return this.http.post(
+            API + '/photos/' + photoId + "/comments", { commentText } //commentText must be exactly the same text as expected at the backend
+        );
+    }
+
 }

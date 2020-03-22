@@ -28,4 +28,15 @@ export class PhotoCommentsComponent implements OnInit {
     });
   }
 
+  salvarComentario() {
+    console.log('Vou salvar o comentario');
+    const comment = this.commentForm.get('comment').value as string;
+    this.photoService.
+      addComment(this.photoId, comment).
+      subscribe(() => {
+        this.commentForm.reset();
+        console.log('Comentario adicionado com sucesso !');
+      });
+  }
+
 }
