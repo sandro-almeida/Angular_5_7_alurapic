@@ -12,7 +12,7 @@ import { PhotoComment } from '../photo/photo-comment';
 export class PhotoDetailsComponent implements OnInit {
 
   photo$: Observable<Photo>;
-  comments$: Observable<PhotoComment[]>;
+  photoId: number;
   
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -20,10 +20,9 @@ export class PhotoDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const photoId = this.activatedRoute.snapshot.params.photoId;
-    console.log("PhotoId: ", photoId);
-    this.photo$ = this.photoService.findById(photoId);
-    this.comments$ = this.photoService.getComments(photoId);
+    this.photoId = this.activatedRoute.snapshot.params.photoId;
+    console.log("PhotoId: ", this.photoId);
+    this.photo$ = this.photoService.findById(this.photoId);
   }
 
 }
