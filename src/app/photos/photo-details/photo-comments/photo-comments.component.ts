@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PhotoService } from './../../photo/photo.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -12,12 +13,19 @@ export class PhotoCommentsComponent implements OnInit {
 
   @Input() photoId: number;
   comments$: Observable<PhotoComment[]>;
+  commentForm: FormGroup;
 
-  constructor(private photoService: PhotoService) { }
+  constructor(
+    private photoService: PhotoService,
+    private formBuilder: FormBuilder
+    ) { }
 
   ngOnInit() {
     this.comments$ = this.photoService.getComments(this.photoId);
     console.log('Photo comments: ', this.comments$);
+    this.commentForm = this.formBuilder.group({
+      comment: ['', Validators.maxLength(300)]
+    });
   }
 
 }
