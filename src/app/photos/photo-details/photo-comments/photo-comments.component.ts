@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PhotoService } from './../../photo/photo.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { PhotoComment } from '../../photo/photo-comment';
 
 @Component({
@@ -31,12 +32,16 @@ export class PhotoCommentsComponent implements OnInit {
   salvarComentario() {
     console.log('Vou salvar o comentario');
     const comment = this.commentForm.get('comment').value as string;
-    this.photoService.
+
+    this.comments$ = this.photoService.
       addComment(this.photoId, comment).
-      subscribe(() => {
+      pipe(switchMap(() =>
+        this.photoService.getComments(this.photoId)
+      )).
+      pipe(tap(() => {
         this.commentForm.reset();
         console.log('Comentario adicionado com sucesso !');
-      });
+      }));
   }
 
 }
