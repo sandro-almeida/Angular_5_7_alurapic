@@ -22,7 +22,7 @@ export class AlertComponent {
                 }
 
                 this.alerts.push(alert);
-                setTimeout(() => this.removeAlert(alert), this.timeout);
+                setTimeout(() => this.removeAlert(alert), this.timeout); //after timeout is elapsed then alert is removed
             });
     }
 
