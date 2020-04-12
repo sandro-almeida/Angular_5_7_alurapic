@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
+import { environment } from '../../../environments/environment'
 
-const API_URL = 'http://localhost:3000';
+const API = environment.apiUrl;
 
 //providedIn: 'root': means that we will have a single instance for the whole application
 @Injectable({
@@ -19,7 +20,7 @@ export class AuthService {
   authenticate(userName: string, password: string) {
     //post returns an Observable
     return this.httpClient.post(
-      API_URL + '/user/login', 
+      API + '/user/login', 
       {userName, password}, //same as {userName: userName, password: password}
       {observe: 'response'} //special configuration to allow access to the response object
       ) 
