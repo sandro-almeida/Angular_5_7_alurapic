@@ -1,8 +1,10 @@
 import { ErrorHandler, Injectable, Injector } from "@angular/core";
+import { Router } from '@angular/router';
 import * as StackTrace from "stacktrace-js";
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { UserService } from 'src/app/core/user/user.service';
 import { ServerLogService } from './server-log-service';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler { 
@@ -15,12 +17,17 @@ export class GlobalErrorHandler implements ErrorHandler {
         const location = this.injector.get(LocationStrategy); //dependency injection on demand
         const userService = this.injector.get(UserService);
         const serverLogService = this.injector.get(ServerLogService);
+        const router = this.injector.get(Router);
 
         const url = location instanceof PathLocationStrategy //get the current route when error occurred
             ? location.path() : '';
         
         const message = error.message
             ? error.message : error.toString(); //message may not exist
+
+        if(environment.production) { //navigate to error page only if it is a production environment
+            router.navigate(['/error']);
+        }
 
         StackTrace
             .fromError(error)

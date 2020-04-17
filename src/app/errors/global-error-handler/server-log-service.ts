@@ -11,6 +11,7 @@ export class ServerLogService {
     constructor(private http: HttpClient) {}
 
     log(serverLog: ServerLog) {
+        console.log('Posting error to server: ', API + '/infra/log');
         return this.http.post(API + 'infra/log', serverLog);
     }
 
