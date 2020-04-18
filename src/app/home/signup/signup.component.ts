@@ -63,16 +63,19 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-      const newUser = this.signupForm.getRawValue() as NewUser; //this returns a JS object with all existing fields from the form
-      this.signUpService
-        .signup(newUser)
-        .subscribe(
-            () => {
-                console.log('Usuario ' + newUser.userName + ' signed-up !!!');
-                this.router.navigate(['']);
-            },
-            err => console.log(err)
-        );
+      console.log('Sign-up chamado');
+      if(this.signupForm.valid && !this.signupForm.pending) { //only signs-up if form is valid
+          const newUser = this.signupForm.getRawValue() as NewUser; //this returns a JS object with all existing fields from the form
+          this.signUpService
+            .signup(newUser)
+            .subscribe(
+                () => {
+                    console.log('Usuario ' + newUser.userName + ' signed-up !!!');
+                    this.router.navigate(['']);
+                },
+                err => console.log(err)
+            );
+      }
   }
 
 }
