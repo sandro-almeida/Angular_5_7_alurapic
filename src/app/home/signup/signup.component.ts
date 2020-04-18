@@ -64,6 +64,7 @@ export class SignupComponent implements OnInit {
 
   signup() {
       console.log('Sign-up chamado');
+      console.log('Form fields', this.signupForm.value); //provides all form values
       if(this.signupForm.valid && !this.signupForm.pending) { //only signs-up if form is valid
           const newUser = this.signupForm.getRawValue() as NewUser; //this returns a JS object with all existing fields from the form
           this.signUpService
